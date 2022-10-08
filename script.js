@@ -10,7 +10,7 @@ const createSquares = ()=>{
     for(;i<maxNumSq;i++){
       let square = document.createElement('div')
       square.style.border='1px solid lightgrey'
-      square.style.backgroundColor = '#fff'
+      square.style.backgroundColor = 'rgb(255,255,255)'
       square.classList.add('square')
       canvas.appendChild(square)
     }
