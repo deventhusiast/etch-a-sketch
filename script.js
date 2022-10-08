@@ -1,6 +1,7 @@
 let canvas = document.querySelector('#canvas')
 let canvasSize = '';
 let convertedSize = 0
+let count = 0
 const createSquares = ()=>{
   let i =0
   let maxNumSq=0
@@ -9,6 +10,7 @@ const createSquares = ()=>{
     for(;i<maxNumSq;i++){
       let square = document.createElement('div')
       square.style.border='1px solid lightgrey'
+      square.style.backgroundColor = '#fff'
       square.classList.add('square')
       canvas.appendChild(square)
     }
@@ -16,41 +18,20 @@ const createSquares = ()=>{
 createSquares()
 const generateColour = (e)=>{
   let element = e.target
-  let r = Math.floor(Math.random()*256)
-  let g = Math.floor(Math.random()*256)
-  let b = Math.floor(Math.random()*256)
-  let rten = r-(r*0.1)
-  let gten = g-(g*0.1)
-  let bten =b-(b*0.1)
-  let i =0;
-  for(;i<10;i++){
-    element.style.backgroundColor=`rgb(${rten-10},${bten-10},${gten-10})`
-  }
-  // do{
-  //   rten = rten-(rten*0.1)
-  //   gten = gten-(gten*0.1)
-  //   bten =bten-(bten*0.1)
-  //   element.style.backgroundColor = `rgb(${rten},${gten},${bten})`
-  // }while(rten ===0 && bten===0 && gten=== 0)
-  // while(r!== 0 && g !== 0 && b!==0){
-  //   r = Math.floor(Math.random()*256)
-  //   g = Math.floor(Math.random()*256)
-  //   b = Math.floor(Math.random()*256)
-  //   `
-  // }
+  let getColour = window.getComputedStyle(element).getPropertyValue('background-color');
+  let initialColourRGB =  [getColour.replace(/[^0-9]/g, ' ').trim().split(' ').filter(el=>/\S/.test(el))];
+  let getColourValues = initialColourRGB[0][0]
+  let colour = Math.ceil(getColourValues/10)
+   if(Math.floor(getColourValues/10) >0 && getColourValues !== NaN){
+     getColourValues-=colour
+     element.style.backgroundColor=`rgb(${getColourValues.toString()},${getColourValues.toString()},${getColourValues.toString()})`
+   }
+
 }
 const changeColour = () =>{
-  // let r = Math.floor(Math.random()*256)
-  // let g = Math.floor(Math.random()*256)
-  // let b = Math.floor(Math.random()*256)
   let squares = [...canvas.children]
   squares.forEach((sq) => {
     sq.addEventListener('mouseover',generateColour)
-      // let r = Math.floor(Math.random()*256)
-      // let g = Math.floor(Math.random()*256)
-      // let b = Math.floor(Math.random()*256)
-      // sq.style.background=`rgb(${r-(r*0.1)},${g-(g*0.1)},${b-(b*0.1)})`
-    //})
   });
 }
 const reset = () =>{
